@@ -17,8 +17,9 @@ const APP_ID = undefined; // TODO replace with your app ID (OPTIONAL).
 
 const handlers = {
     'NewSession': function () {
-        this.attributes.speechOutput = this.t('WELCOME_MESSAGE', this.t('SKILL_NAME'));
-        // If the user either does not reply to the welcome message or says something that is not
+        this.attributes.speechOutput = "potato";
+       // this.attributes.speechOutput = this.t('WELCOME_MESSAGE', this.t('SKILL_NAME'));
+         // If the user either does not reply to the welcome message or says something that is not
         // understood, they will be prompted again with this text.
         this.attributes.repromptSpeech = this.t('WELCOME_REPROMT');
         this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptSpeech);
