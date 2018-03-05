@@ -16,11 +16,68 @@ const recipes = require('./recipes');
 const APP_ID = undefined; // TODO replace with your app ID (OPTIONAL).
 
 const handlers = {
-    
-    'startTheMeeting': function () {
-        this.attributes.speechOutput = "start the meeting has not been implemented yet";
-        this.emit(':tell', this.attributes.speechOutput);
+    // Implemented
+    'startTheMeeting': function () { // introduce and then pass to help intent to list functions
+        this.attributes.speechOutput = this.t('WELCOME_MESSAGE');
+        this.attributes.repromptSpeech = this.t('WELCOME_REPROMT');
+        
+        // right now just tell .. need to figure how I can pass to help intent
+        this.emit('AMAZON.HelpIntent', this.attributes.speechOutput, this.attributes.repromptSpeech);
     },
+    'AMAZON.HelpIntent': function () { // tells what it can do
+        this.attributes.speechOutput = this.t('HELP_MESSAGE');
+        this.attributes.repromptSpeech = this.t('HELP_REPROMT');
+        this.emit(':tell', this.attributes.speechOutput, this.attributes.repromptSpeech);
+    },    
+    //In progress - MVP
+    'tellMeAbout': function () { // tells about a requested attendee
+        if (this.event.request.dialogState !== 'COMPLETED'){
+            // delegating to alexa dialog model if the state is not complete
+            this.emit(':delegate');
+        } else {
+            // get info on person and build reponse.
+            // get alias from slot
+            let subjectAlias = "johngunn";
+            // get name
+            let subjectName = "John Gunn";
+            let objPronoun = "his";
+            let pronoun = "he";
+            let subjectHometown = "Atlanta, GA";
+            let subjectFavTune = "Semi-charmed Life by Third Eye Blind";
+            let subjectLNF = "In college, I went on a blind date to the UVA Kappa Christmas formal with the granddaughter of Lydon Baines Johnson.  The next morning I woke up on her floor wrapped in an old blanket that was embrioidered with the name, Sissy Byrd. I never saw her again.";
+
+            this.attributes.speechOutput = this.t('COMPLETE_INFO', subjectName, subjectHometown, objPronoun, subjectFavTune, pronon, subjectLNF );
+            this.emit(':tell', this.attributes.speechOutput);
+        }
+    },
+    'tellHowYouWork': function () { // tells what it can do
+        this.attributes.speechOutput = this.t('HOWWORK_MESSAGE');
+        this.emit(':tell', this.attributes.speechOutput, this.attributes.repromptSpeech);
+    }, 
+    'askLNFRandomP': function () {
+        if (this.event.request.dialogState === 'STARTED') {
+             // pick the person
+
+            // get their little known fact
+
+            let updatedIntent = this.event.request.intent;
+            // Pre-fill slots: update the intent object with slot values for which
+            // you have defaults, then emit :delegate with this updated intent.
+            // pass on this intent.  Give instruction
+            this.attributes.speechOutput = "OK.  I'm going to give you a litte known fact about one of our team members.  I need a single name as a reponse.  One response at a time, so raise your hand if you have guess.  Here we go.";
+ 
+           // fix thisw
+            updatedIntent.slots.SlotName.value = 'DefaultValue';
+            this.emit(':delegate', updatedIntent);
+        } else if (this.event.request.dialogState !== 'COMPLETED'){
+            // delegating to alexa dialog model if the state is not complete
+            this.emit(':delegate');
+        } else {
+            this.attributes.speechOutput = "OK.  I'm going to give you a litte known fact about one of our team members.  I need a single name as a reponse.  One response at a time, so raise your hand if you have guess.  Are you ready?";
+            this.emit(':ask', this.attributes.speechOutput);
+        }
+    },
+    // for future versions
     'whereWeAt': function () {
         this.attributes.speechOutput = "where we at has not been implemented ye";
         this.emit(':tell', this.attributes.speechOutput);
@@ -37,32 +94,6 @@ const handlers = {
         this.attributes.speechOutput = "take roll has not been implemented ye";
         this.emit(':tell', this.attributes.speechOutput);
     },   
-    'tellMeAbout': function () {
-        if (this.event.request.dialogState !== 'COMPLETED'){
-            // delegating to alexa dialog model if the state is not complete
-            this.emit(':delegate');
-        } else {
-            this.attributes.speechOutput = "tell me about has not been implemented yet";
-            this.emit(':tell', this.attributes.speechOutput);
-        }
-    },
-    'attribForAttendee': function () {
-        if (this.event.request.dialogState !== 'COMPLETED'){
-            // delegating to alexa dialog model if the state is not complete
-            this.emit(':delegate');
-        } else {
-            this.attributes.speechOutput = "atribute for attendee has not been implemented yet";
-            this.emit(':tell', this.attributes.speechOutput);
-        }
-    },
-    'shuffleTeamPlaylist': function () {
-        this.attributes.speechOutput = "shuffle playlist has not been implemented ye";
-        this.emit(':tell', this.attributes.speechOutput);
-    },
-    'playAttendeeSong': function () {
-        this.attributes.speechOutput = "play attendee song has not been implemented ye";
-        this.emit(':tell', this.attributes.speechOutput);
-    },
     'askRandomQrandomPerson': function () {
         this.attributes.speechOutput = "ask random question has not been implemented ye";
         this.emit(':tell', this.attributes.speechOutput);
@@ -75,15 +106,8 @@ const handlers = {
         this.attributes.speechOutput = "ask college question has not been implemented ye";
         this.emit(':tell', this.attributes.speechOutput);
     },
-    'askLNFRandomP': function () {
-        if (this.event.request.dialogState !== 'COMPLETED'){
-            // delegating to alexa dialog model if the state is not complete
-            this.emit(':delegate');
-        } else {
-            this.attributes.speechOutput = "atribute for ask LNF has not been implemented yet";
-            this.emit(':tell', this.attributes.speechOutput);
-        }
-    },
+
+    //keeping this around for now for sample code use
     'RecipeIntent': function () {
         const itemSlot = this.event.request.intent.slots.Item;
         let itemName;
@@ -115,11 +139,7 @@ const handlers = {
             this.emit(':ask', speechOutput, repromptSpeech);
         }
     },
-    'AMAZON.HelpIntent': function () {
-        this.attributes.speechOutput = this.t('HELP_MESSAGE');
-        this.attributes.repromptSpeech = this.t('HELP_REPROMT');
-        this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptSpeech);
-    },
+
     'AMAZON.RepeatIntent': function () {
         this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptSpeech);
     },
@@ -135,31 +155,18 @@ const handlers = {
 };
 
 const languageStrings = {
-    'en-GB': {
-        translation: {
-            RECIPES: recipes.RECIPE_EN_GB,
-            SKILL_NAME: 'British Minecraft Helper',
-            WELCOME_MESSAGE: "Welcome to %s. You can ask a question such as, what\'s the recipe for a chest? ... Now, what can I help you with?",
-            WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
-            DISPLAY_CARD_TITLE: '%s  - Recipe for %s.',
-            HELP_MESSAGE: "You can ask questions such as, what\'s the recipe, or, you can say exit...Now, what can I help you with?",
-            HELP_REPROMT: "You can say things such as, what\'s the recipe, or you can say exit...Now, what can I help you with?",
-            STOP_MESSAGE: 'Goodbye!',
-            RECIPE_REPEAT_MESSAGE: 'Try saying repeat.',
-            RECIPE_NOT_FOUND_MESSAGE: "I\'m sorry, I currently do not know ",
-            RECIPE_NOT_FOUND_WITH_ITEM_NAME: 'the recipe for %s. ',
-            RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME: 'that recipe. ',
-            RECIPE_NOT_FOUND_REPROMPT: 'What else can I help with?',
-        },
-    },
     'en-US': {
         translation: {
-            RECIPES: recipes.RECIPE_EN_US,
-            SKILL_NAME: 'American Minecraft Helper',
-            WELCOME_MESSAGE: "Welcome to %s. You can ask a question like, what\'s the recipe for a chest? ... Now, what can I help you with?",
+            // in use
+            SKILL_NAME: 'Mikey Vee',
+            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  Call me Mikey Vee.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your team mates that you might not know.  Hopfully I can also help break up the day and interject some levity.  You have a packed agenda (and a small room with no windows, so thanks for John).  If you want to talk to me, just tell Alexa to ask Mike and Mike to do someting.",
             WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
+            HELP_MESSAGE: "I can tell you about someone or see if you can guess someone based a little known fact.  Just say, for example, alexa, ask Mikey Vee to tell me about smitty.  Or you can say, alexa, ask Mikey Vee for a little known fact",
+            COMPLETE_INFO: "%s is from %s. %s favorite song is %. %s would like you to know this about him. %s",
+            HOWWORK_MESSAGE: "TODO: fill this in with how I work",
+            // not in use
+            RECIPES: recipes.RECIPE_EN_US,
             DISPLAY_CARD_TITLE: '%s  - Recipe for %s.',
-            HELP_MESSAGE: "You can ask questions such as, what\'s the recipe, or, you can say exit...Now, what can I help you with?",
             HELP_REPROMT: "You can say things like, what\'s the recipe, or you can say exit...Now, what can I help you with?",
             STOP_MESSAGE: 'Goodbye!',
             RECIPE_REPEAT_MESSAGE: 'Try saying repeat.',
@@ -167,23 +174,6 @@ const languageStrings = {
             RECIPE_NOT_FOUND_WITH_ITEM_NAME: 'the recipe for %s. ',
             RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME: 'that recipe. ',
             RECIPE_NOT_FOUND_REPROMPT: 'What else can I help with?',
-        },
-    },
-    'de-DE': {
-        translation: {
-            RECIPES: recipes.RECIPE_DE_DE,
-            SKILL_NAME: 'Assistent für Minecraft in Deutsch',
-            WELCOME_MESSAGE: 'Willkommen bei %s. Du kannst beispielsweise die Frage stellen: Welche Rezepte gibt es für eine Truhe? ... Nun, womit kann ich dir helfen?',
-            WELCOME_REPROMT: 'Wenn du wissen möchtest, was du sagen kannst, sag einfach „Hilf mir“.',
-            DISPLAY_CARD_TITLE: '%s - Rezept für %s.',
-            HELP_MESSAGE: 'Du kannst beispielsweise Fragen stellen wie „Wie geht das Rezept für“ oder du kannst „Beenden“ sagen ... Wie kann ich dir helfen?',
-            HELP_REPROMT: 'Du kannst beispielsweise Sachen sagen wie „Wie geht das Rezept für“ oder du kannst „Beenden“ sagen ... Wie kann ich dir helfen?',
-            STOP_MESSAGE: 'Auf Wiedersehen!',
-            RECIPE_REPEAT_MESSAGE: 'Sage einfach „Wiederholen“.',
-            RECIPE_NOT_FOUND_MESSAGE: 'Tut mir leid, ich kenne derzeit ',
-            RECIPE_NOT_FOUND_WITH_ITEM_NAME: 'das Rezept für %s nicht. ',
-            RECIPE_NOT_FOUND_WITHOUT_ITEM_NAME: 'dieses Rezept nicht. ',
-            RECIPE_NOT_FOUND_REPROMPT: 'Womit kann ich dir sonst helfen?',
         },
     },
 };
