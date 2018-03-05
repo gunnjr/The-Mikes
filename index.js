@@ -22,7 +22,7 @@ const handlers = {
         this.attributes.repromptSpeech = this.t('WELCOME_REPROMT');
         
         // right now just tell .. need to figure how I can pass to help intent
-        this.emit('AMAZON.HelpIntent', this.attributes.speechOutput, this.attributes.repromptSpeech);
+        this.emit(':tell', this.attributes.speechOutput, this.attributes.repromptSpeech);
     },
     'AMAZON.HelpIntent': function () { // tells what it can do
         this.attributes.speechOutput = this.t('HELP_MESSAGE');
@@ -46,7 +46,7 @@ const handlers = {
             let subjectFavTune = "Semi-charmed Life by Third Eye Blind";
             let subjectLNF = "In college, I went on a blind date to the UVA Kappa Christmas formal with the granddaughter of Lydon Baines Johnson.  The next morning I woke up on her floor wrapped in an old blanket that was embrioidered with the name, Sissy Byrd. I never saw her again.";
 
-            this.attributes.speechOutput = this.t('COMPLETE_INFO', subjectName, subjectHometown, objPronoun, subjectFavTune, pronon, subjectLNF );
+            this.attributes.speechOutput = this.t('COMPLETE_INFO', subjectName, subjectHometown, objPronoun, subjectFavTune, pronoun, subjectLNF );
             this.emit(':tell', this.attributes.speechOutput);
         }
     },
@@ -159,7 +159,7 @@ const languageStrings = {
         translation: {
             // in use
             SKILL_NAME: 'Mikey Vee',
-            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  Call me Mikey Vee.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your team mates that you might not know.  Hopfully I can also help break up the day and interject some levity.  You have a packed agenda (and a small room with no windows, so thanks for John).  If you want to talk to me, just tell Alexa to ask Mike and Mike to do someting.",
+            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  Call me Mikey Vee.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your team mates that you might not know.  Hopfully I can also help break up the day and interject some levity.  You have a packed agenda (and a small room with no windows, so thanks for John).  If you want to talk to me, just tell Alexa to ask Mike and Mike to do someting.  If you want to more, ask me for help",
             WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
             HELP_MESSAGE: "I can tell you about someone or see if you can guess someone based a little known fact.  Just say, for example, alexa, ask Mikey Vee to tell me about smitty.  Or you can say, alexa, ask Mikey Vee for a little known fact",
             COMPLETE_INFO: "%s is from %s. %s favorite song is %. %s would like you to know this about him. %s",
