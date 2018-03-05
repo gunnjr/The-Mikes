@@ -31,10 +31,15 @@ const handlers = {
     },    
     //In progress - MVP
     'tellMeAbout': function () { // tells about a requested attendee
-        if (this.event.request.dialogState !== 'COMPLETED'){
-            // delegating to alexa dialog model if the state is not complete
-            this.emit(':delegate');
+        
+        const attendeeSlot = this.event.request.intent.slots.attendee;
+        // see if name was provided
+        if  (!(attendeeSlot && attendeeSlot.value)) {
+            // name not provided, ask for it
+            this.emit(':elicitSlot', 'attendee');
         } else {
+            //we have name, so continue 
+
             // get info on person and build reponse.
             // get alias from slot
             let subjectAlias = "johngunn";
@@ -43,10 +48,14 @@ const handlers = {
             let objPronoun = "his";
             let pronoun = "he";
             let subjectHometown = "Atlanta, GA";
+            let college = "Georgia Tech"
             let subjectFavTune = "Semi-charmed Life by Third Eye Blind";
-            let subjectLNF = "In college, I went on a blind date to the UVA Kappa Christmas formal with the granddaughter of Lydon Baines Johnson.  The next morning I woke up on her floor wrapped in an old blanket that was embrioidered with the name, Sissy Byrd. I never saw her again.";
+            let subjectLNF = "In college, I went on a blind date to the UVA Kappa Christmas formal with the granddaughter of Lydon Baines Johnson.  The next morning I woke up on her floor wrapped in an old blanket that was with the name Sissy Byrd written on it. I never saw her again.";
 
-            this.attributes.speechOutput = this.t('COMPLETE_INFO', subjectName, subjectHometown, objPronoun, subjectFavTune, pronoun, subjectLNF );
+            this.attributes.speechOutput = this.t('COMPLETE_INFO', subjectName, subjectHometown, pronoun, college, objPronoun, subjectFavTune );
+            this.attributes.speechOutput += "Do you want to know " + objPronoun + " a little known fact about " + subjectName + "?";
+            
+            // delegating to alexa dialog model if the state is not complete  TODO: change to elicit LNF
             this.emit(':tell', this.attributes.speechOutput);
         }
     },
@@ -159,11 +168,12 @@ const languageStrings = {
         translation: {
             // in use
             SKILL_NAME: 'Mikey Vee',
-            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  Call me Mikey Vee.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  Hopefully I can also help break up the day and interject some levity.  You have a packed agenda (and a small room with no windows, so thanks for that, John).  If you want to talk to me, just tell Alexa to ask Mikey Vee to do something.  If you want know to more, ask me for help",
+            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  Call me Mikey Vee.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  Hopefully I can also help break up the day and interject some levity.  You have a packed agenda (and a small room with no windows, so thanks for that John).  If you want to talk to me, just tell Alexa to ask Mikey Vee to do something.  If you want to know more, ask me for help",
             WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
-            HELP_MESSAGE: "I can tell you about someone or see if you can guess someone based on their little known fact.  Just say, for example alexa, ask Mikey Vee to tell me about smitty.  Or you can say, alexa, ask Mikey Vee for a little known fact",
-            COMPLETE_INFO: "%s is from %s. %s favorite song is %s. %s would like you to know this about him. %s",
-            HOWWORK_MESSAGE: "It's pretty simple really.  My dialoge model which defines what you say and how i respond is defined on developer.amazon.com.  A single lambda function on AWS has all or my logic.  Information about attendess, i. e. you, is held in a dynamoDB table.  I read that table to get the information that I share with you.",
+            HELP_MESSAGE: "I can tell you about someone or see if you can guess someone based on their little known fact.  Just say for example, alexa, ask Mikey Vee to tell me about Mike Smith.  Or you can say, alexa, ask Mikey Vee for a little known fact",
+            COMPLETE_INFO: "%s is from %s., %s went to %s., %s favorite song is %s.",
+            LNF_INFO: "Here is a little known fact about %s",
+            HOWWORK_MESSAGE: "It's pretty simple really.  My dialog model which defines what you say and how i respond is defined on developer.amazon.com.  A single lambda function on AWS has all of my logic.  Information about the team is held in a dynamo DB.  I pull information from a table in Dyanmo DB to get the information that I share with you.",
             // not in use
             RECIPES: recipes.RECIPE_EN_US,
             DISPLAY_CARD_TITLE: '%s  - Recipe for %s.',
