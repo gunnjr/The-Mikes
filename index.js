@@ -1,6 +1,6 @@
 /* eslint-disable  func-names */
 /* eslint quote-props: ["error", "consistent"]*/
-/**
+/** 
  * This sample demonstrates a sample skill built with Amazon Alexa Skills nodejs
  * skill development kit.
  * This sample supports multiple languages (en-US, en-GB, de-GB).
