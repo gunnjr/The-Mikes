@@ -53,7 +53,7 @@ const handlers = {
             let subjectLNF = "In college, I went on a blind date to the UVA Kappa Christmas formal with the granddaughter of Lydon Baines Johnson.  The next morning I woke up on her floor wrapped in an old blanket that was with the name Sissy Byrd written on it. I never saw her again.";
 
             this.attributes.speechOutput = this.t('COMPLETE_INFO', subjectName, subjectHometown, pronoun, college, objPronoun, subjectFavTune );
-            this.attributes.speechOutput += "Do you want to know " + objPronoun + " a little known fact about " + subjectName + "?";
+            this.attributes.speechOutput += " Do you want to know a little known fact about " + subjectName + "?";
             
             // delegating to alexa dialog model if the state is not complete  TODO: change to elicit LNF
             this.emit(':tell', this.attributes.speechOutput);
