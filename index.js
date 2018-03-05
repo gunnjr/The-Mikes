@@ -16,65 +16,73 @@ const recipes = require('./recipes');
 const APP_ID = undefined; // TODO replace with your app ID (OPTIONAL).
 
 const handlers = {
-    'NewSession': function () {
-        this.attributes.speechOutput = "Hello. Let me know what you want to do.  TheMikes are here to help.";
-       // this.attributes.speechOutput = this.t('WELCOME_MESSAGE', this.t('SKILL_NAME'));
-         // If the user either does not reply to the welcome message or says something that is not
-        // understood, they will be prompted again with this text.
-        this.attributes.repromptSpeech = this.t('WELCOME_REPROMT');
-        this.emit(':ask', this.attributes.speechOutput, this.attributes.repromptSpeech);
-    },
+    
     'startTheMeeting': function () {
         this.attributes.speechOutput = "start the meeting has not been implemented yet";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },
     'whereWeAt': function () {
         this.attributes.speechOutput = "where we at has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },
     'showOneDayAgenda': function () {
         this.attributes.speechOutput = "show day one agenda has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },
     'showTwoDayAgenda': function () {
         this.attributes.speechOutput = "show dat two agenda has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },
     'takeRoll': function () {
         this.attributes.speechOutput = "take roll has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },   
     'tellMeAbout': function () {
-        this.attributes.speechOutput = "tell me about has not been implemented yet";
-        this.emit(':ask', this.attributes.speechOutput);
+        if (this.event.request.dialogState !== 'COMPLETED'){
+            // delegating to alexa dialog model if the state is not complete
+            this.emit(':delegate');
+        } else {
+            this.attributes.speechOutput = "tell me about has not been implemented yet";
+            this.emit(':tell', this.attributes.speechOutput);
+        }
     },
     'attribForAttendee': function () {
-        this.attributes.speechOutput = "attribute for attendee has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        if (this.event.request.dialogState !== 'COMPLETED'){
+            // delegating to alexa dialog model if the state is not complete
+            this.emit(':delegate');
+        } else {
+            this.attributes.speechOutput = "atribute for attendee has not been implemented yet";
+            this.emit(':tell', this.attributes.speechOutput);
+        }
     },
     'shuffleTeamPlaylist': function () {
         this.attributes.speechOutput = "shuffle playlist has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },
     'playAttendeeSong': function () {
         this.attributes.speechOutput = "play attendee song has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },
     'askRandomQrandomPerson': function () {
         this.attributes.speechOutput = "ask random question has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },   
     'askHometownRandomP': function () {
         this.attributes.speechOutput = "ask hometown question has not been implemented yet";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },
     'askCollegeRandomP': function () {
         this.attributes.speechOutput = "ask college question has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        this.emit(':tell', this.attributes.speechOutput);
     },
     'askLNFRandomP': function () {
-        this.attributes.speechOutput = "asl LNF question has not been implemented ye";
-        this.emit(':ask', this.attributes.speechOutput);
+        if (this.event.request.dialogState !== 'COMPLETED'){
+            // delegating to alexa dialog model if the state is not complete
+            this.emit(':delegate');
+        } else {
+            this.attributes.speechOutput = "atribute for ask LNF has not been implemented yet";
+            this.emit(':tell', this.attributes.speechOutput);
+        }
     },
     'RecipeIntent': function () {
         const itemSlot = this.event.request.intent.slots.Item;
