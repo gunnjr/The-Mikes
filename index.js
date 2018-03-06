@@ -63,6 +63,8 @@ const handlers = {
             // get alias from slot
             let posPronoun = attendeeRecord.posPronoun;
             console.log('posPronoun=',posPronoun);
+            let objPronoun = attendeeRecord.objPronoun;
+            console.log('objPronoun=',objPronoun);
             let pronoun = attendeeRecord.pronoun;
             console.log('pronoun=',pronoun);
             let hometown = attendeeRecord.hometown;
@@ -77,9 +79,7 @@ const handlers = {
             //this.attributes.speechOutput = this.t('COMPLETE_INFO', attendeeValue, hometown, pronoun, college, posPronoun, favTune );
             //this.attributes.speechOutput += " Do you want to know a little known fact about " + attendeeValue + "?";
             
-            this.attributes.speechOutput = this.t('COMPLETE_INFO_LNF', attendeeValue, hometown, pronoun, college, posPronoun, favTune, posPronoun, subjectLNF );
-            this.attributes.speechOutput += " Do you want to know a little known fact about " + attendeeValue + "?";
-
+            this.attributes.speechOutput = this.t('COMPLETE_INFO_LNF', attendeeValue, hometown, pronoun, college, posPronoun, favTune, posPronoun, objPronoun, subjectLNF );
 
             // delegating to alexa dialog model if the state is not complete  TODO: change to elicit LNF
             console.log('speechOutput=',this.attributes.speechOutput);
@@ -195,15 +195,15 @@ const languageStrings = {
         translation: {
             // in use
             SKILL_NAME: 'Virtual Mike',
-            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  Hopefully I can also help break up the day and interject some levity.  You have a packed agenda (and a small room with no windows, so thanks for that John).  If you want to talk to me, just tell Alexa to ask Virtual Mike to do something.  If you want to know more, ask me for help",
+            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  If you want to know more, ask me for help",
             WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
-            HELP_MESSAGE: "I can tell you about someone or see if you can guess someone based on their little known fact.  Just say for example, alexa, tell Virtual Mike to tell me about Mike Smith.  Or you can say, alexa, ask Virtual Mike for a little known fact",
+            HELP_MESSAGE: "I can tell you about someone on the team including a little known fact they'd like you to know.  Just say for example, alexa, tell Virtual Mike to tell me about Bob Hardin.",
             COMPLETE_INFO: "%s is from %s., %s went to %s., %s favorite song is %s.",
-            COMPLETE_INFO_LNF: "%s is from %s., %s went to %s., %s favorite song is %s., In %s own words, here's a little known fact.,",
+            COMPLETE_INFO_LNF: "%s is from %s., %s went to %s., %s favorite song is %s., In %s own words here's a little known fact about %s., %s",
             LNF_INFO: "Here is a little known fact about %s",
 
             
-            HOWWORK_MESSAGE: "It's pretty simple really.  My dialog model which defines what you say and how i respond is defined on developer.amazon.com.  A single lambda function on AWS has all of my logic.  Information about the team is held in dynamo DB.  I pull information from a table in dynamo DB to get the information that I share with you.",
+            HOWWORK_MESSAGE: "My dialog model which defines what you say and how i respond is defined on developer.amazon.com.  A single lambda function on AWS has the rest of my logic.  Information about the team is held in dynamo DB.  I pull information from a table in dynamo DB to get the information that I share with you.",
             // not in use
             RECIPES: recipes.RECIPE_EN_US,
             DISPLAY_CARD_TITLE: '%s  - Recipe for %s.',
@@ -261,8 +261,8 @@ const attendees = {
     },
     "bromad": {
        "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
+       "posPronoun": "hers",
+       "objPronoun": "her",
        "hometown": "Mishawaka, IN",
        "college": "Oxford College, Emory University, and Northwestern's Kellogg School of Management",
        "lnf": "If I could only eat one thing forever it would be chilled Gerber strawberry banana baby food.",
@@ -273,10 +273,10 @@ const attendees = {
        "favsongcomment": "Power of a WOMAN!  Bye the way, Darci's song link was to bing not Amazon Music.  Darci, please report to Doppler for re-ascimilation."
     },
     "kleindld": {
-       "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
-       "hometown": "Ellensburg, WA",
+        "pronoun": "she",
+        "posPronoun": "hers",
+        "objPronoun": "her",
+        "hometown": "Ellensburg, WA",
        "college": "University of Wasington",
        "lnf": "Back in my day, I partially afforded college by modeling for Nordstrom, Bon Marche, Nike, and smaller brand clothing lines.  Additionally, I was in the Miss Photogenic pageant, was a hair model, and on a traveling performing Nike bench aerobic team.  It was not glamorous but it paid my beer bills!",
        "favsong": "Long Cool Woman in a Black Dress by the Hollies",
@@ -312,10 +312,10 @@ const attendees = {
        "favsongcomment": "When I was 7 years old, I heard Funky Town and that was it. I LOVED it. I waited by the radio to hear it again. When it came on again, I turned the radio off so I could go grab my family to hear it too. We all gathered around a 6\"x 10\" AM/FM radio. I can remember it like it was yesterday. I turned the radio back on to find out it had NOT saved my spot. I was very disappointed."
     },
     "olsonmo": {
-       "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
-       "hometown": "Minneapolis, MN",
+        "pronoun": "she",
+        "posPronoun": "hers",
+        "objPronoun": "her",
+        "hometown": "Minneapolis, MN",
        "college": "St. Cloud State University",
        "lnf": "I have been with my husband since 8th grade. We would ride bicycles together until we could drive. When he turned 16, he bought a 1970 Chevelle. He fixed it up and added a blower. We would race it at Brainerd International Raceway. Our kids learned to ride their bicycles on the track. I once placed 3rd in the powder puff out of 125 women. I was actually supposed to go to the line to race for first but I didn't realize the other women had broke the line (started too early)and I headed back to the pit to be with my family. That day I had my best reaction time and 1/4 mile time. ",
        "favsong": "Funky Town By Lipps, Inc.",
@@ -325,10 +325,10 @@ const attendees = {
        "favsongcomment": ""
     },
     "johnalli": {
-       "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
-       "hometown": "Saint Louis, MO",
+        "pronoun": "she",
+        "posPronoun": "hers",
+        "objPronoun": "her",
+        "hometown": "Saint Louis, MO",
        "college": "UC Santa Barbara",
        "lnf": "I came in 2nd place in the Non-wetsuit division in the Escape from Alcatraz open water swim race many years ago.",
        "favsong": "Candy by Cameo",
@@ -338,9 +338,9 @@ const attendees = {
        "favsongcomment": ""
     },
     "doughme": {
-       "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
+        "pronoun": "she",
+       "posPronoun": "hers",
+       "objPronoun": "her",
        "hometown": "Nashua, NH",
        "college": "Northeastern University",
        "lnf": "I won a championship jump roping contest which led to my love of crossfit!  (True story)",
@@ -351,9 +351,9 @@ const attendees = {
        "favsongcomment": ""
     },
     "bartosea": {
-       "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
+        "pronoun": "she",
+       "posPronoun": "hers",
+       "objPronoun": "her",
        "hometown": "Methuen, MA",
        "college": "Northern Essex",
        "lnf": "I am an amazing Karaoke singer.",
@@ -364,10 +364,10 @@ const attendees = {
        "favsongcomment": ""
     },
     "mortonly": {
-       "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
-       "hometown": "Louisville, KY ",
+        "pronoun": "she",
+        "posPronoun": "hers",
+        "objPronoun": "her",
+        "hometown": "Louisville, KY ",
        "college": "University of missouri and SE Missouri State",
        "lnf": "I'm an artist ",
        "favsong": "Broken by Seether (featuring Amy Lee)",
@@ -416,9 +416,9 @@ const attendees = {
        "favsongcomment": ""
     },
     "rppetti": {
-       "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
+        "pronoun": "she",
+        "posPronoun": "hers",
+        "objPronoun": "her",
        "hometown": "Cleveland, OH",
        "college": "Kent State University",
        "lnf": "I can touch my tongue to my nose",
@@ -429,9 +429,9 @@ const attendees = {
        "favsongcomment": ""
     },
     "rielahje": {
-       "pronoun": "she",
-       "posPronoun": "her",
-       "objPronoun": "she",
+        "pronoun": "she",
+       "posPronoun": "hers",
+       "objPronoun": "her",
        "hometown": "Quezon City, Philippines",
        "college": "Ateneo De Manila University, Philippines",
        "lnf": "I am currently a Brown belt in Tae Kwon Do and I, drive a Mini-Cooper I named Peppa.",
