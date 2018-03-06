@@ -63,7 +63,7 @@ const handlers = {
             console.log('hometown=',hometown);
             let college = attendeeRecord.college;
             console.log('college=',college);
-            let favTune = attendeeRecord.favTune;
+            let favTune = attendeeRecord.favsong;
             console.log('favTune=',favTune);
             let subjectLNF = attendeeRecord.lnf;
             console.log('subjectLNF=',subjectLNF);
@@ -72,6 +72,7 @@ const handlers = {
             this.attributes.speechOutput += " Do you want to know a little known fact about " + attendeeValue + "?";
             
             // delegating to alexa dialog model if the state is not complete  TODO: change to elicit LNF
+            console.log('speechOutput=',this.attributes.speechOutput);
             this.emit(':tell', this.attributes.speechOutput);
         }
     },
