@@ -34,13 +34,15 @@ const handlers = {
         
         const attendeeSlot = this.event.request.intent.slots.attendee;
         console.log('attendeeSlot=',attendeeSlot);
+        console.log('attendeeSlot.value=',attendeeSlot.value);
+        console.log('attendeeSlot.resolutions=',attendeeSlot);
 
         // see if name was provided
         if  (!(attendeeSlot && attendeeSlot.value)) {
             // name not provided, ask for it
             this.attributes.speechOutput = "Who do you want to know about?";
             this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
-        } else if (!(attendeeSlot.resolutions)) {
+        } else if (!(attendeeSlot.resolutions && attendeeSlot.resolutions.resolutionsPerAuthority)) {
             this.attributes.speechOutput = "I don't recognize the name, " + attendeeSlot.value + ",  Please repeat the person's name.";
             this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
         } 
@@ -72,9 +74,13 @@ const handlers = {
             let subjectLNF = attendeeRecord.lnf;
             console.log('subjectLNF=',subjectLNF);
 
-            this.attributes.speechOutput = this.t('COMPLETE_INFO', attendeeValue, hometown, pronoun, college, posPronoun, favTune );
-            this.attributes.speechOutput += " Do you want to know a little known fact about " + attendeeValue + "?";
+            //this.attributes.speechOutput = this.t('COMPLETE_INFO', attendeeValue, hometown, pronoun, college, posPronoun, favTune );
+            //this.attributes.speechOutput += " Do you want to know a little known fact about " + attendeeValue + "?";
             
+            this.attributes.speechOutput = this.t('COMPLETE_INFO_LNF', attendeeValue, hometown, pronoun, college, posPronoun, favTune, posPronoun, subjectLNF );
+            this.attributes.speechOutput += " Do you want to know a little known fact about " + attendeeValue + "?";
+
+
             // delegating to alexa dialog model if the state is not complete  TODO: change to elicit LNF
             console.log('speechOutput=',this.attributes.speechOutput);
             this.emit(':tell', this.attributes.speechOutput);
@@ -193,7 +199,10 @@ const languageStrings = {
             WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
             HELP_MESSAGE: "I can tell you about someone or see if you can guess someone based on their little known fact.  Just say for example, alexa, tell Virtual Mike to tell me about Mike Smith.  Or you can say, alexa, ask Virtual Mike for a little known fact",
             COMPLETE_INFO: "%s is from %s., %s went to %s., %s favorite song is %s.",
+            COMPLETE_INFO_LNF: "%s is from %s., %s went to %s., %s favorite song is %s., In %s own words, here's a little known fact.,",
             LNF_INFO: "Here is a little known fact about %s",
+
+            
             HOWWORK_MESSAGE: "It's pretty simple really.  My dialog model which defines what you say and how i respond is defined on developer.amazon.com.  A single lambda function on AWS has all of my logic.  Information about the team is held in dynamo DB.  I pull information from a table in dynamo DB to get the information that I share with you.",
             // not in use
             RECIPES: recipes.RECIPE_EN_US,
@@ -267,7 +276,7 @@ const attendees = {
        "pronoun": "she",
        "posPronoun": "her",
        "objPronoun": "she",
-       "hometown": "Ellensburg WA",
+       "hometown": "Ellensburg, WA",
        "college": "University of Wasington",
        "lnf": "Back in my day, I partially afforded college by modeling for Nordstrom, Bon Marche, Nike, and smaller brand clothing lines.  Additionally, I was in the Miss Photogenic pageant, was a hair model, and on a traveling performing Nike bench aerobic team.  It was not glamorous but it paid my beer bills!",
        "favsong": "Long Cool Woman in a Black Dress by the Hollies",
@@ -319,7 +328,7 @@ const attendees = {
        "pronoun": "she",
        "posPronoun": "her",
        "objPronoun": "she",
-       "hometown": "St. Louiis, MO",
+       "hometown": "Saint Louis, MO",
        "college": "UC Santa Barbara",
        "lnf": "I came in 2nd place in the Non-wetsuit division in the Escape from Alcatraz open water swim race many years ago.",
        "favsong": "Candy by Cameo",
