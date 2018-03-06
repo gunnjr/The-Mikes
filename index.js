@@ -45,7 +45,7 @@ const handlers = {
             // name not provided, ask for it
             this.attributes.speechOutput = "Who do you want to know about?";
             this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
-        } else if ( resolutionStatus != 'ER_STATUS_MATCH' ) {
+        } else if ( resolutionStatus != 'ER_SUCCESS_MATCH' ) {
             this.attributes.speechOutput = "I don't recognize the name, " + attendeeSlot.value + ",  Please repeat the person's name.";
             this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
         } 
