@@ -33,16 +33,19 @@ const handlers = {
     'tellMeAbout': function () { // tells about a requested attendee
         
         const attendeeSlot = this.event.request.intent.slots.attendee;
+        const resolutionStatus = attendeeSlot.resolutions.resolutionsPerAuthority[0].status.code;
+
         console.log('attendeeSlot=',attendeeSlot);
         console.log('attendeeSlot.value=',attendeeSlot.value);
         console.log('attendeeSlot.resolutions=',attendeeSlot);
+        console.log('resolutionStatus=',resolutionStatus);
 
         // see if name was provided
         if  (!(attendeeSlot && attendeeSlot.value)) {
             // name not provided, ask for it
             this.attributes.speechOutput = "Who do you want to know about?";
             this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
-        } else if (!(attendeeSlot.resolutions && attendeeSlot.resolutions.resolutionsPerAuthority)) {
+        } else if ( resolutionStatus != 'ER_STATUS_MATCH' ) {
             this.attributes.speechOutput = "I don't recognize the name, " + attendeeSlot.value + ",  Please repeat the person's name.";
             this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
         } 
@@ -90,6 +93,30 @@ const handlers = {
         this.attributes.speechOutput = this.t('HOWWORK_MESSAGE');
         this.emit(':tell', this.attributes.speechOutput, this.attributes.repromptSpeech);
     }, 
+    /*
+    'giveFact': function () { // ramdomly selects a fact of the requested type from list of attendees
+        
+        const factTypeSlot = this.event.request.intent.slots.factType;
+        console.log('attendeeSlot=',factTypeSlot);
+        console.log('attendeeSlot.value=',attendeeSlot.value);
+        console.log('attendeeSlot.resolutions=',attendeeSlot);
+
+        // see if name was provided
+    } else if ((attendeeSlot.resolutions.resolutionsPerAuthority.length > 0) && (attendeeSlot.resolutions.resolutionsPerAuthority.values.length > 0)) {
+        
+       
+        if  (!(attendeeSlot && attendeeSlot.value)) {
+            // name not provided, ask for it
+            this.attributes.speechOutput = "Who do you want to know about?";
+            this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
+        // if fact type is specified, select one from the list and tell it
+
+        // else elicit the slot value
+
+
+        this.attributes.speechOutput = this.t('HOWWORK_MESSAGE');
+        this.emit(':tell', this.attributes.speechOutput, this.attributes.repromptSpeech);
+    }, */
     'askLNFRandomP': function () {
         if (this.event.request.dialogState === 'STARTED') {
              // pick the person
