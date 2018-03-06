@@ -197,9 +197,9 @@ const languageStrings = {
             SKILL_NAME: 'Virtual Mike',
             WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  If you want to know more, ask me for help",
             WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
-            HELP_MESSAGE: "I can tell you about someone on the team including a little known fact they'd like you to know.  Just say for example, alexa, tell Virtual Mike to tell me about Bob Hardin.",
+            HELP_MESSAGE: "I can tell you about someone on the team including a little known fact they'd like you to know.  Just say for example, alexa, tell Virtual Mike to tell me about Bob Hardin.  If I don't recognize a name, try saying the first name only.",
             COMPLETE_INFO: "%s is from %s., %s went to %s., %s favorite song is %s.",
-            COMPLETE_INFO_LNF: "%s is from %s., %s went to %s., %s favorite song is %s., In %s own words here's a little known fact about %s., %s",
+            COMPLETE_INFO_LNF: "%s is from %s., %s went to %s., %s favorite song is %s., In %s own words here's something you might not know about %s., %s",
             LNF_INFO: "Here is a little known fact about %s",
 
             
@@ -226,7 +226,7 @@ const attendees = {
        "objPronoun": "him",
        "hometown": "Atlanta, GA",
        "college": "Georgia Tech",
-       "lnf": "In college, I went on a blind date to the UVA Kappa Christmas formal with the granddaughter of Lydon Baines Johnson.  The next morning I woke up on her floor wrapped in an old blanket that the name Sissy Byrd embroidered on it. I left shortly thereafter and never saw her again.",
+       "lnf": "In college, I went on a blind date to the UVA Kappa Christmas formal with the granddaughter of Lydon Baines Johnson.  The next morning I woke up on her floor wrapped in an old blanket that had the name Sissy Byrd embroidered on it. I left shortly thereafter and never saw her again.",
        "favsong": "Semi-Charmed Life by Third Eye Blind",
        "favsongurl": "https://music.amazon.com/albums/B0012QLX1Q?trackAsin=B0012QLMIU&ref=dm_sh_1c7e-ae7e-dmcp-758e-0c242&musicTerritory=US&marketplaceId=ATVPDKIKX0DER",
        "lastUsedTime": "",
@@ -261,7 +261,7 @@ const attendees = {
     },
     "bromad": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "her",
        "hometown": "Mishawaka, IN",
        "college": "Oxford College, Emory University, and Northwestern's Kellogg School of Management",
@@ -274,7 +274,7 @@ const attendees = {
     },
     "kleindld": {
         "pronoun": "she",
-        "posPronoun": "hers",
+        "posPronoun": "her",
         "objPronoun": "her",
         "hometown": "Ellensburg, WA",
        "college": "University of Wasington",
@@ -313,7 +313,7 @@ const attendees = {
     },
     "olsonmo": {
         "pronoun": "she",
-        "posPronoun": "hers",
+        "posPronoun": "her",
         "objPronoun": "her",
         "hometown": "Minneapolis, MN",
        "college": "St. Cloud State University",
@@ -326,7 +326,7 @@ const attendees = {
     },
     "johnalli": {
         "pronoun": "she",
-        "posPronoun": "hers",
+        "posPronoun": "her",
         "objPronoun": "her",
         "hometown": "Saint Louis, MO",
        "college": "UC Santa Barbara",
@@ -339,7 +339,7 @@ const attendees = {
     },
     "doughme": {
         "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "her",
        "hometown": "Nashua, NH",
        "college": "Northeastern University",
@@ -352,7 +352,7 @@ const attendees = {
     },
     "bartosea": {
         "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "her",
        "hometown": "Methuen, MA",
        "college": "Northern Essex",
@@ -365,7 +365,7 @@ const attendees = {
     },
     "mortonly": {
         "pronoun": "she",
-        "posPronoun": "hers",
+        "posPronoun": "her",
         "objPronoun": "her",
         "hometown": "Louisville, KY ",
        "college": "University of missouri and SE Missouri State",
@@ -417,7 +417,7 @@ const attendees = {
     },
     "rppetti": {
         "pronoun": "she",
-        "posPronoun": "hers",
+        "posPronoun": "her",
         "objPronoun": "her",
        "hometown": "Cleveland, OH",
        "college": "Kent State University",
@@ -430,7 +430,7 @@ const attendees = {
     },
     "rielahje": {
         "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "her",
        "hometown": "Quezon City, Philippines",
        "college": "Ateneo De Manila University, Philippines",
@@ -448,7 +448,7 @@ const attendees = {
        "hometown": "Saugus, MA",
        "college": "Plymouth State University (BS), University of Iowa (MBA)",
        "lnf": "I have a few tattoos.",
-       "favsong": "Sweet - Fox on the Run By The Sweet",
+       "favsong": "Fox on the Run By The Sweet",
        "favsongurl": "https://music.amazon.com/albums/B01N7Z30HQ/CATALOG?ref=dm_wcp_albm_link_trsnpt",
        "lastUsedTime": "",
        "emailaddress": "dowli@amazon.com",
