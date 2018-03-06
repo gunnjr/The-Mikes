@@ -167,10 +167,10 @@ const languageStrings = {
     'en-US': {
         translation: {
             // in use
-            SKILL_NAME: 'Mikey Vee',
-            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  Call me Mikey Vee.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  Hopefully I can also help break up the day and interject some levity.  You have a packed agenda (and a small room with no windows, so thanks for that John).  If you want to talk to me, just tell Alexa to ask Mikey Vee to do something.  If you want to know more, ask me for help",
+            SKILL_NAME: 'Virtual Mike',
+            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  Hopefully I can also help break up the day and interject some levity.  You have a packed agenda (and a small room with no windows, so thanks for that John).  If you want to talk to me, just tell Alexa to ask Virtual Mike to do something.  If you want to know more, ask me for help",
             WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
-            HELP_MESSAGE: "I can tell you about someone or see if you can guess someone based on their little known fact.  Just say for example, alexa, ask Mikey Vee to tell me about Mike Smith.  Or you can say, alexa, ask Mikey Vee for a little known fact",
+            HELP_MESSAGE: "I can tell you about someone or see if you can guess someone based on their little known fact.  Just say for example, alexa, ask Virtual Mike to tell me about Mike Smith.  Or you can say, alexa, ask Virtual Mike for a little known fact",
             COMPLETE_INFO: "%s is from %s., %s went to %s., %s favorite song is %s.",
             LNF_INFO: "Here is a little known fact about %s",
             HOWWORK_MESSAGE: "It's pretty simple really.  My dialog model which defines what you say and how i respond is defined on developer.amazon.com.  A single lambda function on AWS has all of my logic.  Information about the team is held in a dynamo DB.  I pull information from a table in Dyanmo DB to get the information that I share with you.",
