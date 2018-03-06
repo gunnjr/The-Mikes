@@ -38,9 +38,13 @@ const handlers = {
         // see if name was provided
         if  (!(attendeeSlot && attendeeSlot.value)) {
             // name not provided, ask for it
-            this.attributes.speechOutput += "Who do you want to know about?";
+            this.attributes.speechOutput = "Who do you want to know about?";
             this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
-        } else {
+        } else if (!(attendeeSlot.resolutions)) {
+            this.attributes.speechOutput = "I don't recognize the name, " + attendeeSlot.value + ",  Please repeat the person's name.";
+            this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
+        } 
+        else {
             //we have name, so get info on attendee from slot 
             const attendeeSpoken = attendeeSlot.value;
             const attendeeValue = attendeeSlot.resolutions.resolutionsPerAuthority[0].values[0].value.name; // persons name
@@ -248,7 +252,7 @@ const attendees = {
     },
     "bromad": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "Mishawaka, IN",
        "college": "Oxford College, Emory University, and Northwestern's Kellogg School of Management",
@@ -261,7 +265,7 @@ const attendees = {
     },
     "kleindld": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "Ellensburg WA",
        "college": "University of Wasington",
@@ -300,7 +304,7 @@ const attendees = {
     },
     "olsonmo": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "Minneapolis, MN",
        "college": "St. Cloud State University",
@@ -313,7 +317,7 @@ const attendees = {
     },
     "johnalli": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "St. Louiis, MO",
        "college": "UC Santa Barbara",
@@ -326,7 +330,7 @@ const attendees = {
     },
     "doughme": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "Nashua, NH",
        "college": "Northeastern University",
@@ -339,7 +343,7 @@ const attendees = {
     },
     "bartosea": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "Methuen, MA",
        "college": "Northern Essex",
@@ -352,7 +356,7 @@ const attendees = {
     },
     "mortonly": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "Louisville, KY ",
        "college": "University of missouri and SE Missouri State",
@@ -404,7 +408,7 @@ const attendees = {
     },
     "rppetti": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "Cleveland, OH",
        "college": "Kent State University",
@@ -417,7 +421,7 @@ const attendees = {
     },
     "rielahje": {
        "pronoun": "she",
-       "posPronoun": "hers",
+       "posPronoun": "her",
        "objPronoun": "she",
        "hometown": "Quezon City, Philippines",
        "college": "Ateneo De Manila University, Philippines",
