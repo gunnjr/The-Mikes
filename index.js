@@ -38,7 +38,7 @@ const handlers = {
         // see if name was provided
         if  (!(attendeeSlot && attendeeSlot.value)) {
             // name not provided, ask for it
-            this.attributes.speechOutput += "Who do you want to know about";
+            this.attributes.speechOutput += "Who do you want to know about?";
             this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
         } else {
             //we have name, so get info on attendee from slot 
