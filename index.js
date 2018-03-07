@@ -93,30 +93,38 @@ const handlers = {
         this.attributes.speechOutput = this.t('HOWWORK_MESSAGE');
         this.emit(':tell', this.attributes.speechOutput, this.attributes.repromptSpeech);
     }, 
-    /*
     'giveFact': function () { // ramdomly selects a fact of the requested type from list of attendees
         
         const factTypeSlot = this.event.request.intent.slots.factType;
-        console.log('attendeeSlot=',factTypeSlot);
-        console.log('attendeeSlot.value=',attendeeSlot.value);
-        console.log('attendeeSlot.resolutions=',attendeeSlot);
+        const resolutionStatus = factTypeSlot.resolutions.resolutionsPerAuthority[0].status.code;
+        console.log('factTypeSlot=',factTypeSlot);
+        console.log('factTypeSlot.value=',factTypeSlot.value);
+        console.log('resolutionStatus=',resolutionStatus);
 
-        // see if name was provided
-    } else if ((attendeeSlot.resolutions.resolutionsPerAuthority.length > 0) && (attendeeSlot.resolutions.resolutionsPerAuthority.values.length > 0)) {
-        
-       
-        if  (!(attendeeSlot && attendeeSlot.value)) {
-            // name not provided, ask for it
-            this.attributes.speechOutput = "Who do you want to know about?";
-            this.emit(':elicitSlot', 'attendee',this.attributes.speechOutput);
-        // if fact type is specified, select one from the list and tell it
+        if  (!(factTypeSlot && factTypeSlot.value)) {  // see if name was provided
+            // fact type not provided, ask for it
+            this.emit(':delegate');
+        } else if ( resolutionStatus != 'ER_SUCCESS_MATCH' ) {
+            // type provided but not resolved
+            this.attributes.speechOutput = "I don't recognize the fact type, " + factTypeSlot.value + ",  Please repeat the fact type you want.";
+            this.emit(':elicitSlot', 'factType',this.attributes.speechOutput);
+        } else {
+            // get targeted act type
+            let factTypeID = factTypeSlot.resolutions.resolutionsPerAuthority[0].values[0].value.id; // amazon alias
+            
+            // get number of attendees
+            let attendeeCount = attendees.length();
+            
+            // pick a random index
+            let randomNbr = Math.floor(Math.random() * attendeeCount);
+            let attendeeRecord = attendees(randomNbr);
+            
+            let randmFact = attendeeRecord[factTypeID];
 
-        // else elicit the slot value
-
-
-        this.attributes.speechOutput = this.t('HOWWORK_MESSAGE');
-        this.emit(':tell', this.attributes.speechOutput, this.attributes.repromptSpeech);
-    }, */
+            this.attributes.speechOutput = "Here's a random  " +  factTypeSlot.value + " from a team membeer. " + randmFact + " Who do you think it is?";
+            this.emit(':tell',this.attributes.speechOutput);
+        }
+    },
     'askLNFRandomP': function () {
         if (this.event.request.dialogState === 'STARTED') {
              // pick the person
@@ -139,7 +147,7 @@ const handlers = {
             this.attributes.speechOutput = "OK.  I'm going to give you a litte known fact about one of our team members.  I need a single name as a reponse.  One response at a time, so raise your hand if you have guess.  Are you ready?";
             this.emit(':ask', this.attributes.speechOutput);
         }
-    },
+    }, 
     // for future versions
     'whereWeAt': function () {
         this.attributes.speechOutput = "where we at has not been implemented ye";
@@ -221,8 +229,8 @@ const languageStrings = {
     'en-US': {
         translation: {
             // in use
-            SKILL_NAME: 'Virtual Mike',
-            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m virtual Mike.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  If you want to know more, ask me for help",
+            SKILL_NAME: 'Music City Mike',
+            WELCOME_MESSAGE: "Hello and welcome to Nashville!  I\'m Music City Mike.  I\'ll be your meeting companion for the next two days.  My goal is to help you learn some things about your teammates that you might not know.  If you want to know more, ask me for help",
             WELCOME_REPROMT: 'For instructions on what you can say, please say help me.',
             HELP_MESSAGE: "I can tell you about someone on the team including a little known fact they'd like you to know.  Just say for example, alexa, tell Virtual Mike to tell me about Bob Hardin.  If I don't recognize a name, try saying the first name only.",
             COMPLETE_INFO: "%s is from %s., %s went to %s., %s favorite song is %s.",
@@ -506,8 +514,21 @@ const attendees = {
        "lastUsedTime": "",
        "emailaddress": "wsaxe@amazon.com",
        "favsongcomment": ""
-    }
- };
+    },
+    "bernamor": {
+        "pronoun": "he",
+        "posPronoun": "his",
+        "objPronoun": "him",
+        "hometown": "Dunn, NC",
+        "college": "NC A&T and UNC Chapel Hill",
+        "lnf": "I can hum and whistle at the same time.  Earned me the line name Sonic in my fraternity, like Sonic, the Hedgehog.",
+        "favsong": "Love and Happiness by Al Green",
+        "favsongurl": "https://music.amazon.com/albums/B01MTOJQSJ/B01MTOJWID/CATALOG",
+        "lastUsedTime": "",
+        "emailaddress": "bernamor@amazon.com",
+        "favsongcomment": ""
+     }
+};
 
 exports.handler = (event, context) => {
     const alexa = Alexa.handler(event, context);
