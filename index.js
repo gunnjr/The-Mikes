@@ -93,6 +93,7 @@ const handlers = {
         this.attributes.speechOutput = this.t('HOWWORK_MESSAGE');
         this.emit(':tell', this.attributes.speechOutput, this.attributes.repromptSpeech);
     }, 
+    /*
     'giveFact': function () { // ramdomly selects a fact of the requested type from list of attendees
         
         const factTypeSlot = this.event.request.intent.slots.factType;
@@ -125,6 +126,7 @@ const handlers = {
             this.emit(':tell',this.attributes.speechOutput);
         }
     },
+    */
     'askLNFRandomP': function () {
         if (this.event.request.dialogState === 'STARTED') {
              // pick the person
